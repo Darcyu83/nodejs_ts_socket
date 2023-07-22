@@ -5,13 +5,23 @@ import morgan from "morgan";
 import path from "path";
 import cookieParser from "cookie-parser";
 import session from "express-session";
-
+import Websocket from "ws";
+import http from "http";
+import Socket from "./modules/socket";
+import nunjucks from "nunjucks";
 dotenv.config();
 const app = express();
+
 app.set("port", process.env.PORT || 4013);
+app.set("view engine", "html");
+nunjucks.configure("views", {
+  express: app,
+  watch: true,
+});
 
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "public")));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -46,6 +56,9 @@ app.use(handleWrongRequest);
 // 에러 핸들러
 app.use(handleError);
 
-app.listen(app.get("port"), () => {
+const server = app.listen(app.get("port"), () => {
   console.log(app.get("port"), "번 대기 중");
 });
+
+// 소켓 활성화
+Socket(server);
