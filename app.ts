@@ -7,8 +7,10 @@ import cookieParser from "cookie-parser";
 import session from "express-session";
 import Websocket from "ws";
 import http from "http";
-import Socket from "./modules/socket";
+import Socket from "./modules/socket_ws";
 import nunjucks from "nunjucks";
+import initSocketIO from "./modules/socket_socketIO";
+import initSocketWS from "./modules/socket_ws";
 dotenv.config();
 const app = express();
 
@@ -61,4 +63,5 @@ const server = app.listen(app.get("port"), () => {
 });
 
 // 소켓 활성화
-Socket(server);
+// initSocketWS(server);
+initSocketIO(server);

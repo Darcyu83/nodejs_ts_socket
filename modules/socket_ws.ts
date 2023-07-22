@@ -1,7 +1,7 @@
 import { WebSocket } from "ws";
 import http from "http";
 
-const Socket = (
+const initSocketWS = (
   server: http.Server<typeof http.IncomingMessage, typeof http.ServerResponse>
 ) => {
   const wss = new WebSocket.Server({ server });
@@ -36,4 +36,4 @@ const Socket = (
   });
 };
 
-export default Socket;
+export default initSocketWS;

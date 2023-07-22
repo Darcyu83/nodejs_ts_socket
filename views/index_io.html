@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = new io.connect("ws://localhost:4013", {
+        path: "/socket.io",
+      });
+      socket.on("news", (data) => {
+        console.log("news===", data);
+        socket.emit("reply", "뉴스 곰마워욤");
+      });
+
+      socket.onmessage = function (event) {
+        console.log(event.data);
+        socket.send("클라이언트 메시지 : from client");
+      };
+    </script>
+  </body>
+</html>
